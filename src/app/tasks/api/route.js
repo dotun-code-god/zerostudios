@@ -1,5 +1,4 @@
 import { google } from "googleapis";
-import keys from '../../../../promptia-396220-e9972043fe80.json';
 const CLIENT_EMAIL = process.env.NEXT_SERVICE_ACCOUNT_CLIENT_EMAIL;
 const PRIVATE_KEY = process.env.NEXT_SERVICE_ACCOUNT_PRIVATE_KEY.split(String.raw`\n`).join('\n');
 export async function GET() {
