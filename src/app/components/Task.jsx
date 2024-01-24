@@ -106,7 +106,7 @@ const Task = ({prompt}) => {
                     tasks ? tasks.map((task, index) => {
                         return (
                             <div key={index} className='flex items-center justify-between '>
-                                <p className='text-center'>{task?.Action || task?.careGapAction || task?.careGap || task?.action || task?.caregap || task?.CareGap || task?.caregapAction}</p>
+                                <p className='text-center'>{task?.Action || task?.careGapAction || task?.careGap || task?.action || task?.caregap || task?.CareGap || task?.caregapAction || task?.CareGapAction}</p>
                                 <p className='text-center'>{task?.Name || task?.patientName || task?.name || task?.Patient}</p>
                                 <p className='text-center'>{task?.Priority || task?.priority}</p>
                             </div>
