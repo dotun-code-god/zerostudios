@@ -1,10 +1,11 @@
 import { google } from "googleapis";
-import keys from '../../../../promptia-396220-e9972043fe80.json';
+const CLIENT_EMAIL = process.env.NEXT_SERVICE_ACCOUNT_CLIENT_EMAIL;
+const PRIVATE_KEY = process.env.NEXT_SERVICE_ACCOUNT_PRIVATE_KEY;
 
 export async function GET() {
     try {
         const client = new google.auth.JWT(
-            keys.client_email, null, keys.private_key, ['https://www.googleapis.com/auth/spreadsheets']
+            CLIENT_EMAIL, null, PRIVATE_KEY, ['https://www.googleapis.com/auth/spreadsheets']
         );
 
         await client.authorize();
