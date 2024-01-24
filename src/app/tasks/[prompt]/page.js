@@ -1,5 +1,4 @@
 
-import axios from 'axios';
 import Task from '@/app/components/Task';
 
 export default function Tasks({ params }) {

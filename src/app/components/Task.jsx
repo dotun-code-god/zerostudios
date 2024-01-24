@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
 
-const Test = ({prompt}) => {
+const Task = ({prompt}) => {
     // const [patientsRecords, setPatientsRecord] = useState([]);
     let patientsRecords = [];
     const [tasks, setTasks] = useState(null);
@@ -17,7 +17,6 @@ const Test = ({prompt}) => {
             await axios.get("/tasks/api")
                 .then(res => {
                     processPatientsRecords(res.data)
-                    console.log("yeah")
                     console.log({resultData: res.data})
                     console.log({patientsRecords})
                     if(patientsRecords.length > 0){
@@ -101,14 +100,14 @@ const Test = ({prompt}) => {
             <p className="text-[rgb(114,118,126)] text-xl">Tasks</p>
         </div>
         <div className='mt-3 px-5'>
-              <h1 className='text-[rgb(114,118,126)] '>Below are the tasks generated from your prompt - {prompt}</h1>
+              <h1 className='text-[rgb(114,118,126)] '>Below are the tasks generated from your prompt - {prompt.replace(/%20/g, " ")}</h1>
               <div className='w-full mt-10 px-15'>
                 {
                     tasks ? tasks.map((task, index) => {
                         return (
                             <div key={index} className='flex items-center justify-between '>
-                                <p className='text-center'>{task?.Action || task?.careGapAction || task?.careGap || task?.action}</p>
-                                <p className='text-center'>{task?.Name || task?.patientName || task?.name}</p>
+                                <p className='text-center'>{task?.Action || task?.careGapAction || task?.careGap || task?.action || task?.caregap || task?.CareGap || task?.caregapAction}</p>
+                                <p className='text-center'>{task?.Name || task?.patientName || task?.name || task?.Patient}</p>
                                 <p className='text-center'>{task?.Priority || task?.priority}</p>
                             </div>
                         )
@@ -122,4 +121,4 @@ const Test = ({prompt}) => {
   )
 }
 
-export default Test
+export default Task
