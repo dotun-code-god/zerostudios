@@ -17,8 +17,6 @@ const Task = ({prompt}) => {
             await axios.get("/tasks/api")
                 .then(res => {
                     processPatientsRecords(res.data)
-                    console.log({resultData: res.data})
-                    console.log({patientsRecords})
                     if(patientsRecords.length > 0){
                         processList(prompt, patientsRecords);
                     }
