@@ -1,6 +1,8 @@
 import { google } from "googleapis";
+
 const CLIENT_EMAIL = process.env.NEXT_SERVICE_ACCOUNT_CLIENT_EMAIL;
 const PRIVATE_KEY = process.env.NEXT_SERVICE_ACCOUNT_PRIVATE_KEY.split(String.raw`\n`).join('\n');
+
 export async function GET() {
     try {
         const client = new google.auth.JWT(
@@ -8,9 +10,9 @@ export async function GET() {
         );
 
         await client.authorize();
-        
+
         const gsapi = google.sheets({ version: 'v4', auth: client });
-        
+
         const optHeaders = {
             spreadsheetId: process.env.NEXT_SPREADSHEET_ID,
             range: 'Sheet1!1:1',

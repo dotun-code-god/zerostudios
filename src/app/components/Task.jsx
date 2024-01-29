@@ -5,8 +5,6 @@ import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
-
 const Task = ({prompt}) => {
     // const [patientsRecords, setPatientsRecord] = useState([]);
     let patientsRecords = [];
@@ -14,7 +12,7 @@ const Task = ({prompt}) => {
 
     useEffect(() => {
         const fetchPatientsRecords = async () => {
-            await axios.get("/tasks/api")
+            await axios.get("/tasks/api/fetchPatientsRecords")
                 .then(res => {
                     processPatientsRecords(res.data)
                     if(patientsRecords.length > 0){
@@ -56,27 +54,19 @@ const Task = ({prompt}) => {
             model: "gpt-3.5-turbo",
             messages: [
                 { role: "system", content: `${careGapsInstruction}` },
-                { role: "user", content: `Prompt: ${prompt}` },
+                { role: "user", content: `Prompt: ${prompt.replace(/%20/g, ' ')}` },
                 assistantMessage
-            ]
+            ],
+            stream: true
         }
 
-        await fetch("https://api.openai.com/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                "Authorization": "Bearer " + apiKey,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(apiRequestBody)
-        }).then(data => {
-            return data.json();
-        }).then(data => {
-            const generatedResult = data.choices && data.choices[0].message.content;
-            // setAIResult(data);
-            console.log(generatedResult);
-            setTasks(JSON.parse(generatedResult))
-        })
-
+        await axios.post("/tasks/api/fetchGPTResponse", apiRequestBody)
+            .then(res => {
+                setTasks(res.data);
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
     }
 
     useEffect(() => {
